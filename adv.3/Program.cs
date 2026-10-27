@@ -63,45 +63,130 @@
 
     #region q2
 
-    class Program
-    {
-        static void Main()
-        {
-            Stack<string> history = new Stack<string>();
+    //class Program
+    //{
+    //    static void Main()
+    //    {
+    //        Stack<string> history = new Stack<string>();
 
-            history.Push("google.com");
-            history.Push("github.com");
-            history.Push("stackoverflow.com");
-            history.Push("youtube.com");
-            history.Push("claude.ai");
+    //        history.Push("google.com");
+    //        history.Push("github.com");
+    //        history.Push("stackoverflow.com");
+    //        history.Push("youtube.com");
+    //        history.Push("claude.ai");
 
-            Console.WriteLine("Current Page: " + history.Peek());
+    //        Console.WriteLine("Current Page: " + history.Peek());
 
-            Console.WriteLine("\nGoing Back:");
+    //        Console.WriteLine("\nGoing Back:");
 
-            for (int i = 0; i < 3; i++)
-            {
-                Console.WriteLine("Leaving: " + history.Pop());
-            }
+    //        for (int i = 0; i < 3; i++)
+    //        {
+    //            Console.WriteLine("Leaving: " + history.Pop());
+    //        }
 
-            Console.WriteLine("\nCurrent Page: " + history.Peek());
+    //        Console.WriteLine("\nCurrent Page: " + history.Peek());
 
-            history.Pop();
-            history.Pop();
+    //        history.Pop();
+    //        history.Pop();
 
-            if (history.TryPop(out string page))
-            {
-                Console.WriteLine(page);
-            }
-            else
-            {
-                Console.WriteLine("Stack is empty");
-            }
-        }
-    }
+    //        if (history.TryPop(out string page))
+    //        {
+    //            Console.WriteLine(page);
+    //        }
+    //        else
+    //        {
+    //            Console.WriteLine("Stack is empty");
+    //        }
+    //    }
+    //}
 
 
     #endregion
+
+
+    #region q3
+
+    class Product
+    {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+
+        public Product(string name, decimal price)
+        {
+            Name = name;
+            Price = price;
+        }
+    }
+
+    class Program
+    {
+        #region Question 3.2: Transform Products
+
+        static List<string> TransformProducts(
+            List<Product> products,
+            Func<Product, string> transform)
+        {
+            List<string> result = new List<string>();
+
+            foreach (Product product in products)
+            {
+                result.Add(transform(product));
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        static void Main()
+        {
+            List<Product> products = new List<Product>
+        {
+            new Product("Laptop", 1200),
+            new Product("Phone", 800),
+            new Product("T-Shirt", 30),
+            new Product("Jeans", 60),
+            new Product("Chocolate", 5),
+            new Product("Coffee Beans", 15),
+            new Product("C# Book", 45)
+        };
+
+            #region Scenario 3: Summary List
+
+            Console.WriteLine("--- Summary List ---");
+
+            List<string> summary = TransformProducts(
+                products,
+                p => $"{p.Name} (${p.Price})"
+            );
+
+            foreach (string item in summary)
+            {
+                Console.WriteLine(item);
+            }
+
+            #endregion
+
+            #region Scenario 4: Price Labels
+
+            Console.WriteLine("\n--- Price Labels ---");
+
+            List<string> labels = TransformProducts(
+                products,
+                p => $"{p.Name}: {(p.Price > 100 ? "Expensive!" : "Affordable")}"
+            );
+
+            foreach (string item in labels)
+            {
+                Console.WriteLine(item);
+            }
+
+            #endregion
+        }
+    }
+
+    #endregion 
+
 
 
 }
